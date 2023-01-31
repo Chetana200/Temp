@@ -46,7 +46,7 @@ int main() {
     int Expectedoutcome;
     char ch[1];
 	if (ptr == NULL)
-    {
+    { printf("Hello");
         printf("Unable to open file.\n");
         printf("Please check you have read previleges.\n");
         //exit(1);
@@ -56,4 +56,5 @@ int main() {
     testcheckForAlphabet(ch,Expectedoutcome);
     fclose(ptr);    
     return 0;
+    printf("Hello");
 }
