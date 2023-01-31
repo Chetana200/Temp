@@ -1,0 +1,81 @@
+#include <iostream>
+using namespace std;
+
+class Date {
+    public:
+        int day;
+        int month;
+        int year;
+
+    public:
+        Date(int d, int m, int y) {
+            day = d;
+            month = m;
+            year = y;
+        }
+
+        int getDay() {
+            return day;
+        }
+
+        int getMonth() {
+            return month;
+        }
+
+        int getYear() {
+            return year;
+        }
+
+        int daysInMonth() {
+            if (month == 2) {
+                if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) {
+                    return 29;
+                } else {
+                    return 28;
+                }
+            } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+                return 30;
+            } else {
+                return 31;
+            }
+        }
+
+        int daysUntilEndOfMonth() {
+            return daysInMonth() - day;
+        }
+
+        int daysUntilEndOfYear() {
+            int days = daysUntilEndOfMonth();
+            for (int i = month + 1; i <= 12; i++) {
+                days += Date(1, i, year).daysInMonth();
+            }
+            return days;
+        }
+};
+
+int main() {
+     Date date1(10, 5, 2020);
+    Date date2(15, 12, 2022);
+
+    int days = 0;
+
+    // Add days from date1 until end of year
+    days += date1.daysUntilEndOfYear();
+
+    // Add days from start of year in date1 to date2
+    for (int i = 1; i < date2.getMonth(); i++) {
+        days += Date(1, i, date2.getYear()).daysInMonth();
+    }
+    days += date2.getDay();
+
+    // Add days from date1 year to date2 year
+    for (int i = date1.getYear() + 1; i < date2.getYear(); i++) {
+        days += Date(1, 12, i).daysUntilEndOfYear();
+    }
+
+    cout << "Number of days between " << date1.getDay() << "-" << date1.getMonth() << "-" << date1.getYear()
+         << " and " << date2.getDay() << "-" << date2.getMonth() << "-" << date2.getYear()
+         << " is: " << days ;
+
+    return 0;
+}
